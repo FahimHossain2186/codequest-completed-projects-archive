@@ -10,17 +10,17 @@ Each project is organized into its own folder, with a dedicated `README.md` file
 ```
 📦 completed-projects  
  ┣ 📄 README.md  # You're reading it now! 🎉  
- ┣ 📂 TicTacToe  
+ ┣ 📂 tic-tac-toe 
  ┃ ┣ 📄 README.md  # Description of the Tic-Tac-Toe project  
  ┃ ┣ 📄 game.c  
  ┃ ┣ 📄 game.h  
- ┣ 📂 GuessTheSpell  
+ ┣ 📂 guess-the-spell 
  ┃ ┣ 📄 README.md  # Description of the Guess The Spell game  
  ┃ ┣ 📄 guessSpell.py  
- ┣ 📂 SecretCodeEncrypt  
+ ┣ 📂 secret-code-encrypt  
  ┃ ┣ 📄 README.md  # Description of the Secret Code Encrypt project  
  ┃ ┣ 📄 encrypt.py  
- ┣ 📂 RockPaperScissors  
+ ┣ 📂 rock-paper-scissors 
  ┃ ┣ 📄 README.md  # Description of the Rock, Paper, Scissors game  
  ┃ ┣ 📄 rockPaperScissors.py  
 ```
