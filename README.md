@@ -12,8 +12,7 @@ Each project is organized into its own folder, with a dedicated `README.md` file
  ┣ 📄 README.md  # You're reading it now! 🎉  
  ┣ 📂 tic-tac-toe 
  ┃ ┣ 📄 README.md  # Description of the Tic-Tac-Toe project  
- ┃ ┣ 📄 game.c  
- ┃ ┣ 📄 game.h  
+ ┃ ┣ 📄 ticTacToe.c  
  ┣ 📂 guess-the-spell 
  ┃ ┣ 📄 README.md  # Description of the Guess The Spell game  
  ┃ ┣ 📄 guessSpell.py  
@@ -44,8 +43,8 @@ Each project is organized into its own folder, with a dedicated `README.md` file
 ```
 ### 2️⃣ Navigate to a Project
 ```sh
- cd RockPaperScissors
- gcc rps.c -o rps
+ cd tic-tac-toe
+ gcc ticTacToe.c -o ticTacToe
  ./rps
 ```
 
