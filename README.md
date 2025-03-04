@@ -1,4 +1,4 @@
-# 📂 Completed Projects Repository 🚀
+# 📂 Completed Projects Repository 
 
 Welcome to my **Completed Projects** repository! This serves as a collection of all the projects and games I've successfully built. Each project is well-documented and structured, showcasing my programming skills and problem-solving approach. Whether you're here to explore, learn, or contribute, there's something for everyone! 🎉
 
@@ -12,8 +12,7 @@ Each project is organized into its own folder, with a dedicated `README.md` file
  ┣ 📄 README.md  # You're reading it now! 🎉  
  ┣ 📂 tic-tac-toe 
  ┃ ┣ 📄 README.md  # Description of the Tic-Tac-Toe project  
- ┃ ┣ 📄 game.c  
- ┃ ┣ 📄 game.h  
+ ┃ ┣ 📄 ticTacToe.c  
  ┣ 📂 guess-the-spell 
  ┃ ┣ 📄 README.md  # Description of the Guess The Spell game  
  ┃ ┣ 📄 guessSpell.py  
@@ -28,10 +27,10 @@ Each project is organized into its own folder, with a dedicated `README.md` file
 ---
 
 ## 🔥 Projects & Games Included
-- 🎮 **[Tic-Tac-Toe](TicTacToe/README.md)** – A fun and interactive classic Tic-Tac-Toe game.
-- ✨ **[Guess The Spell](GuessTheSpell/README.md)** – A magical word-guessing game.
-- 🔐 **[Secret Code Encrypt](SecretCodeEncrypt/README.md)** – A simple encryption program for encoding messages.
-- ✊🖐✂ **[Rock, Paper, Scissors](RockPaperScissors/README.md)** – A classic hand game simulation.
+- 🎮 **[Tic-Tac-Toe](tic-tac-toe/README.md)** – A fun and interactive classic Tic-Tac-Toe game.
+- ✨ **[Guess The Spell](guess-the-spell/README.md)** – A magical word-guessing game.
+- 🔐 **[Secret Code Encrypt](secret-code-encrypt/README.md)** – A simple encryption program for encoding messages.
+- ✊🖐✂ **[Rock, Paper, Scissors](rock-paper-scissors/README.md)** – A classic hand game simulation.
 - 🚀 **[More Projects Coming Soon!](#)**
 
 ---
@@ -44,8 +43,8 @@ Each project is organized into its own folder, with a dedicated `README.md` file
 ```
 ### 2️⃣ Navigate to a Project
 ```sh
- cd RockPaperScissors
- gcc rps.c -o rps
+ cd tic-tac-toe
+ gcc ticTacToe.c -o ticTacToe
  ./rps
 ```
 
