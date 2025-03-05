@@ -5,8 +5,9 @@ This project features a classic X vs. O battle with computer.
 ---
 
 ## 📌 Features
-- 🆚 **Player vs. Player** mode(Incoming)
-- 🧠 **Player vs. AI** mode (coming soon!)
+- 🧠 **Player vs. AI** mode
+- 💀 **Challenge the Impossible** mode
+- 🆚 **Player vs. Player** mode
 - 🔄 **Exit** options
 - 📜 Well-commented and modular code structure
 

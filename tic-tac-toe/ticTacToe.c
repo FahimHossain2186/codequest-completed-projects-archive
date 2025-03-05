@@ -3,6 +3,9 @@
 #include <time.h>
 
 char input[3][3];
+int winCountPlayer = 0;
+int winCountPlayer2 = 0;
+int winCountComputer = 0;
 
 void printBoard(){
 
@@ -50,6 +53,29 @@ void player(){
         if(input[row][column] != ' ')   printf("Invalid Move!!\n");
         else{
             input[row][column] = 'X';
+            break;
+        }
+    }
+    
+
+}
+
+void player2(){
+
+    int row, column;
+
+    while(1){
+
+        printf("Enter row #(1-3): ");
+        scanf("%d", &row);
+        row--;
+        printf("Enter column #(1-3): ");
+        scanf("%d", &column);
+        column--;
+
+        if(input[row][column] != ' ')   printf("Invalid Move!!\n");
+        else{
+            input[row][column] = 'O';
             break;
         }
     }
@@ -409,6 +435,51 @@ int impossibleGame(){
         }while (exit_choice != 1 && exit_choice != 2); 
 }
 
+int pvp(){
+
+    char winner = ' '; int exit_choice;
+   
+    srand(time(0));
+
+    resetBoard();
+    
+    while(winner == ' ' &&  emptyspace() != 0){
+        
+        printBoard();
+
+        player();
+        winner = winnerCheck();
+        if(winner != ' ' || emptyspace() == 0) break;
+
+        printBoard();
+        
+        player2();
+        winner = winnerCheck();
+        if(winner != ' ' || emptyspace() == 0) break;
+        
+    }
+
+    printBoard();
+    printWinner(winner);
+
+    printf("Do you want to play another round?");
+    printf("\n 1. Yes :(  2. No :D\n");
+
+        do{
+
+            scanf("%d", &exit_choice);
+
+            if (exit_choice == 1) {
+                newgame(); 
+            }
+
+            else if (exit_choice == 2){
+                printf("Exiting the Game.....\n");
+                return 0; 
+            }
+        }while (exit_choice != 1 && exit_choice != 2); 
+}
+
 int main(){
 
     int choice, exit_choice;
@@ -416,11 +487,12 @@ int main(){
     printf("Welcome to Tic Tac Toe");
     printf("\n1. NEW GAME");
     printf("\n2. LEVEL IMPOSSIBLE");
-    printf("\n3. EXIT\n");
+    printf("\n3. PLAYER vs PLAYER");
+    printf("\n4. EXIT\n");
 
     do{
         scanf("%d", &choice);
-    }while(choice != 1 && choice != 2 && choice != 3);
+    }while(choice != 1 && choice != 2 && choice != 3 && choice != 4);
 
     if (choice == 1) {
         newgame();
@@ -428,9 +500,13 @@ int main(){
     
     else if (choice == 2) {
         impossibleGame();
-    }  
-
+    }
+    
     else if (choice == 3) {
+        pvp();
+    }
+
+    else if (choice == 4) {
 
         printf("Are you sure you want to exit?");
         printf("\n 1. Yes :(  2. No :D\n");
