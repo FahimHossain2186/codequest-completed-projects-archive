@@ -1,9 +1,21 @@
-def load_students():
+import sys
+
+class StudentIDError(Exception):
+    """Exception raised when user input a Student ID which is already in the Dataset during addition or missing during deletion."""
+    pass
+
+
+def test_count(students):
+    sample_student = list(students.values())[0]
+    return len(sample_student["grades"])
+
+
+def load_students(FILE_NAME):
 
     students = {}
 
     try:
-        with open("grades.txt", "r") as file:
+        with open(FILE_NAME, "r") as file:
             for line in file:
                 line = line.strip()
                 if not line:
@@ -23,17 +35,39 @@ def load_students():
             '''
             Check Purpose:
 
-                for key, value in students.items():
-                    print(key, value)
-                    print(key, value[0])
-                    print(key, value[1])
-                    print(key, value[1][0])
+                for student_id, student_info in students.items():
+                    print(student_id, student_info)
+                    print(student_id, student_info[0])
+                    print(student_id, student_info[1])
+                    print(student_id, student_info[1][0])
             '''
 
     except FileNotFoundError:
         print(f"File not Found")
 
     return students
+
+
+def save_exit(students, FILE_NAME):
+
+    try:
+        with open(FILE_NAME, "w") as file:
+
+            for student_id, student_info in students.items():
+                name = student_info["name"]
+                '''
+                student_info["grades"] --> list of grades
+                " ".join --> " " + grade1 + " " + grade2 + ... 
+                '''
+                grades_string = " ".join(student_info["grades"])
+
+                #91007# Ahmad Said# 50.0 78.5 73.2
+                file.write(f"{student_id}# {name}# {grades_string}\n")
+
+        sys.exit()
+
+    except Exception as e:
+        print(f"Error saving file: {e}")
 
 
 def enter():
@@ -54,18 +88,18 @@ def header(students, format):
         print("Average")
 
 
-def database_print(key, value, format):
+def database_print(student_id, student_info, format):
 
-    print(f"{' ' * (9-len(key))}{key}  {value['name']:<20}", end = " ")
+    print(f"{' ' * (9-len(student_id))}{student_id}  {student_info['name']:<20}", end = " ")
 
     if format == "test":
-        for score in value["grades"]:
+        for score in student_info["grades"]:
             print(f"{score:<5}", end = " ")
         print()
     elif format == "avg":
         count = 0
         sum = 0
-        for score in value["grades"]:
+        for score in student_info["grades"]:
             count += 1
             sum += float(score)
         print(f"{sum/count:.1f}")
@@ -81,8 +115,8 @@ def grade_all_student(students):
     header(students, "test")
     print("\n")
 
-    for key, value in students.items():
-        database_print(key, value, "test")
+    for student_id, student_info in students.items():
+        database_print(student_id, student_info, "test")
 
     enter()
 
@@ -93,9 +127,9 @@ def grade_one_student(students):
 
     if student_id in students:
         header(students, "test")
-        value = students[student_id]
+        student_info = students[student_id]
         print()
-        database_print(student_id, value, "test")
+        database_print(student_id, student_info, "test")
 
     else:
         print("Error: Invalid student ID")
@@ -108,8 +142,8 @@ def grade_average(students):
     header(students, "avg")
     print()
 
-    for key, value in students.items():
-        database_print(key, value, "avg")
+    for student_id, student_info in students.items():
+        database_print(student_id, student_info, "avg")
 
     enter()
 
@@ -122,18 +156,18 @@ def modify_grades(students):
         if student_id in students:
 
             quiz_no = int(input("Please enter quiz number to modify: ").strip()) - 1
-            value = students[student_id]
+            student_info = students[student_id]
 
-            if 0 <= quiz_no < len(value["grades"]):
+            if 0 <= quiz_no < len(student_info["grades"]):
 
-                changed_grade = input(f"Please enter new quiz {quiz_no} grade: ")
+                changed_grade = float(input(f"Please enter new quiz {quiz_no+1} grade: "))
 
                 print("Before grade modification: ", end = "")
-                database_print(student_id, value, "test")
+                database_print(student_id, student_info, "test")
 
-                value["grades"][quiz_no] = changed_grade
+                student_info["grades"][quiz_no] = f"{changed_grade:.1f}"
                 print("After grade modification:  ", end = "")
-                database_print(student_id, value, "test")
+                database_print(student_id, student_info, "test")
 
             else:
                 print("Error: Invalid quiz number")
@@ -147,19 +181,55 @@ def modify_grades(students):
 
 
 def add_grade(students):
-    ...
+
+    test_number = test_count(students)
+    print(f"Please enter test grades for Test#{test_number+1}\n")
+
+    for student_id, student_info in students.items():
+        test_number = float(input(f"Please enter grade for student : {student_id}\n").strip())
+        student_info["grades"].append(f"{test_number:.1f}")
+
+    enter()
 
 
 def add_student(students):
-    ...
+
+    try:
+        student_id = input("Enter studentID: ").strip()
+
+        if student_id in students.keys():
+            raise StudentIDError
+
+        else:
+            student_name = input("Enter Student Name: ").strip()
+            student_grades = []
+            for i in range(test_count(students)):
+                grade = float(input(f"Enter grade for test#{i+1}: "))
+
+                student_grades.append(f"{grade:.1f}")
+
+            students[student_id] = {"name": student_name, "grades": student_grades}
+
+    except StudentIDError as e:
+        print("Student ID already exists")
+
+    enter()
 
 
 def delete_student(students):
-    ...
+    try:
+        student_id = input("Enter studentID: ").strip()
 
+        if not student_id in students.keys():
+            raise StudentIDError
 
-def save_exit(students):
-    ...
+        else:
+            students.pop(student_id)
+
+    except StudentIDError as e:
+        print("Student ID doesn't exist")
+
+    enter()
 
 
 def menu():
@@ -182,8 +252,8 @@ def main():
     """
     Program starts here
     """
-
-    students = load_students()
+    FILE_NAME = "grades.txt"
+    students = load_students(FILE_NAME)
 
     option = 1
 
@@ -213,7 +283,7 @@ def main():
                 case 7:
                     delete_student(students)
                 case 8:
-                    ...
+                    save_exit(students, FILE_NAME)
 
         except ValueError:
             print("Please enter a valid option")
