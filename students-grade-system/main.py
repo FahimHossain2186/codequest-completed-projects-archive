@@ -6,6 +6,8 @@ class StudentIDError(Exception):
 
 
 def test_count(students):
+    if not students:
+        return 0
     sample_student = list(students.values())[0]
     return len(sample_student["grades"])
 
@@ -25,22 +27,12 @@ def load_students(FILE_NAME):
                 if grades == "":
                     continue
 
-                #print(student_grades) --> For Checking
                 student_grades = grades.split()
 
                 students[student_id.strip()] = {
                     "name" : student_name.strip(),
                     "grades" : student_grades}
 
-            '''
-            Check Purpose:
-
-                for student_id, student_info in students.items():
-                    print(student_id, student_info)
-                    print(student_id, student_info[0])
-                    print(student_id, student_info[1])
-                    print(student_id, student_info[1][0])
-            '''
 
     except FileNotFoundError:
         print(f"File not Found")
@@ -48,7 +40,7 @@ def load_students(FILE_NAME):
     return students
 
 
-def save_exit(students, FILE_NAME):
+def save_exit(students, FILE_NAME):                             #Option 8
 
     try:
         with open(FILE_NAME, "w") as file:
@@ -77,6 +69,9 @@ def enter():
 
 def header(students, format):
 
+    if not students:
+        return 0
+
     print(f"{'StudentID':<10} {'Student Name':<20}", end = " ")
 
     sample_student = list(students.values())[0]
@@ -98,14 +93,19 @@ def database_print(student_id, student_info, format):
         print()
     elif format == "avg":
         count = 0
-        sum = 0
+        total = 0
+
+        if len(student_info["grades"]) == 0:
+            print(f"{'N/A':>8}")
+            return
+
         for score in student_info["grades"]:
             count += 1
-            sum += float(score)
-        print(f"{sum/count:.1f}")
+            total += float(score)
+        print(f"{total/count:.1f}")
 
 
-def grade_all_student(students):
+def grade_all_student(students):                                #Option 1
 
     if not students:                            # students == ""
         print("No dataset for Students")
@@ -121,7 +121,7 @@ def grade_all_student(students):
     enter()
 
 
-def grade_one_student(students):
+def grade_one_student(students):                                #Option 2
 
     student_id = input("Enter studentID: ").strip()
 
@@ -137,7 +137,7 @@ def grade_one_student(students):
     enter()
 
 
-def grade_average(students):
+def grade_average(students):                                    #Option 3
 
     header(students, "avg")
     print()
@@ -148,51 +148,88 @@ def grade_average(students):
     enter()
 
 
-def modify_grades(students):
+def modify_grades(students):                                    #Option 4
 
-    try:
-        student_id = input("Enter studentID: ").strip()
+    student_id = input("Enter studentID: ").strip()
 
-        if student_id in students:
 
-            quiz_no = int(input("Please enter quiz number to modify: ").strip()) - 1
-            student_info = students[student_id]
+    if student_id in students:
 
+        student_info = students[student_id]
+
+        while True:
+            try:
+                quiz_no = int(input("Please enter quiz number to modify: ").strip()) - 1
+            except ValueError:
+                print("Error: Quiz number must be an integer. Please try again.")
+                continue
             if 0 <= quiz_no < len(student_info["grades"]):
+                break
 
+            print(f"Error: Please enter a number in between 1 and {len(student_info['grades'])}")
+
+        while True:
+            try:
                 changed_grade = float(input(f"Please enter new quiz {quiz_no+1} grade: "))
+            except ValueError:
+                print("Error: Enter a valid grade. It must be a number")
+                continue
 
-                print("Before grade modification: ", end = "")
-                database_print(student_id, student_info, "test")
+            if 0 <= changed_grade <= 100:
+                break
 
-                student_info["grades"][quiz_no] = f"{changed_grade:.1f}"
-                print("After grade modification:  ", end = "")
-                database_print(student_id, student_info, "test")
+            print("Error: Grade must be between 0 and 100.")
 
-            else:
-                print("Error: Invalid quiz number")
-        else:
-            print("Error: Invalid student ID")
+        print("Before grade modification: ", end = "")
+        database_print(student_id, student_info, "test")
 
-    except ValueError:
-        print("Error: Invalid quiz number")
+        student_info["grades"][quiz_no] = f"{changed_grade:.1f}"
+        print("After grade modification:  ", end = "")
+        database_print(student_id, student_info, "test")
+
+    else:
+        print("Error: Invalid student ID")
 
     enter()
 
 
-def add_grade(students):
+def add_grade(students):                                        #Option 5
+
+    if not students:
+        print("No students in the system.")
+        enter()
+        return
 
     test_number = test_count(students)
     print(f"Please enter test grades for Test#{test_number+1}\n")
 
+    collected = {}
+
     for student_id, student_info in students.items():
-        test_number = float(input(f"Please enter grade for student : {student_id}\n").strip())
-        student_info["grades"].append(f"{test_number:.1f}")
+        while True:
+            try:
+                grade = float(input(f"Please enter grade for student : {student_id}\n").strip())
+
+                if not (0 <= grade <= 100):
+                    print("Error: Grade must be between 0 and 100. Please try again.")
+                    continue
+
+            except ValueError:
+                print("Error: Please enter a numeric grade.")
+                continue
+
+            collected[student_id] = f"{grade:.1f}"
+            break
+
+    # All grades validated
+    # Putting the values to dictionary
+    for student_id, grade_str in collected.items():
+        students[student_id]["grades"].append(grade_str)
 
     enter()
 
 
-def add_student(students):
+def add_student(students):                                      #Option 6
 
     try:
         student_id = input("Enter studentID: ").strip()
@@ -204,19 +241,30 @@ def add_student(students):
             student_name = input("Enter Student Name: ").strip()
             student_grades = []
             for i in range(test_count(students)):
-                grade = float(input(f"Enter grade for test#{i+1}: "))
+
+                while True:
+                    try:
+                        grade = float(input(f"Enter grade for test#{i+1}: "))
+                    except ValueError:
+                        print("Enter a valid grade")
+                        continue
+
+                    if 0 <= grade <= 100:
+                        break
+
+                    print("Error: Grade must be between 0 and 100. Please try again.")
 
                 student_grades.append(f"{grade:.1f}")
 
             students[student_id] = {"name": student_name, "grades": student_grades}
 
-    except StudentIDError as e:
+    except StudentIDError:
         print("Student ID already exists")
 
     enter()
 
 
-def delete_student(students):
+def delete_student(students):                                   #Option 7
     try:
         student_id = input("Enter studentID: ").strip()
 
