@@ -1,15 +1,12 @@
 import os
 
 '''
-
-This module provides functionality to save student information to a file.
-
-
+This module saves student information to a file.
 '''
 
 def save_students(students, FILE_NAME):                                             #Option 8
 
-    FILE_NAME = os.path.join(os.path.dirname(__file__), "data", FILE_NAME)
+    FILE_NAME = os.path.join(os.path.dirname(__file__), "data", FILE_NAME)          # Get the absolute path to the file in the data directory
 
     try:
         with open(FILE_NAME, "w") as file:

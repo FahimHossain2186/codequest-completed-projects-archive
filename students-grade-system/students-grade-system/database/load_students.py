@@ -22,7 +22,7 @@ students = {
 def load_students(FILE_NAME):
 
     students = {}
-    FILE_NAME = os.path.join(os.path.dirname(__file__), "data", FILE_NAME)
+    FILE_NAME = os.path.join(os.path.dirname(__file__), "data", FILE_NAME)      # Get the absolute path to the file in the data directory
 
     try:
         with open(FILE_NAME, "r") as file:
