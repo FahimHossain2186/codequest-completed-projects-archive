@@ -2,9 +2,13 @@ from ui.enter import enter
 from utility.database_print import database_print
 from ui.header import header
 
-def grade_all_student(students):                                #Option 1
+'''
+This module prints the database of all students along with their grades and ID.
+'''
 
-    if not students:                            # students == ""
+def grade_all_student(students):                                    #Option 1
+
+    if not students:                                                # students == ""
         print("No dataset for Students")
         return
 

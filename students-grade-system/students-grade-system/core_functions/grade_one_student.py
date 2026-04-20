@@ -2,6 +2,10 @@ from ui.enter import enter
 from utility.database_print import database_print
 from ui.header import header
 
+'''
+This module prints the database of a single student along with their grades and ID.
+'''
+
 def grade_one_student(students):                                #Option 2
 
     student_id = input("Enter studentID: ").strip()
