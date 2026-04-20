@@ -1,3 +1,9 @@
+"""
+This module contains the function to print the students' information in a formatted way. 
+The function takes in the student ID, student information, and the format to print the information. 
+The function prints the student ID, name, and either the test scores or the average score depending on the format specified.
+"""
+
 def database_print(student_id, student_info, format):
 
     print(f"{' ' * (9-len(student_id))}{student_id}  {student_info['name']:<20}", end = " ")

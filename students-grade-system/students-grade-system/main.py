@@ -1,3 +1,5 @@
+import sys
+
 from core_functions.grade_all_student import grade_all_student
 from core_functions.grade_one_student import grade_one_student
 from core_functions.grade_average import grade_average
@@ -14,8 +16,12 @@ from ui.menu import menu
 def main():
 
     """
-    Program starts here
+    In the main function, we load the students from the file using the load_students function, 
+    and then we display the menu to the user. The user can select an option from the menu, 
+    and then we call the corresponding function to perform the action. If the user selects option 8, 
+    we save the students to the file and exit the program.
     """
+
     FILE_NAME = "grades.txt"
     students = load_students(FILE_NAME)
 
@@ -48,6 +54,7 @@ def main():
                     delete_student(students)
                 case 8:
                     save_exit(students, FILE_NAME)
+                    sys.exit()
 
         except ValueError:
             print("Please enter a valid option")

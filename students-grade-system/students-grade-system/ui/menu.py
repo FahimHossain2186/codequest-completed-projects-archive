@@ -1,3 +1,7 @@
+"""
+This module contains the function to display the main menu of the student grade management system.
+"""
+
 def menu():
     print("\n"  + "-" * 60)
     print(" " * 14 + "Student Grade Management System")

@@ -1,5 +1,23 @@
 import os
 
+'''
+This function loads student information from a file and returns a dictionary of students.
+The function takes in the file name as an argument and reads the file line by line.
+Then it splits each line into student ID, student name, and student grades using the '#' as separator.
+The student information is stored in a dictionary where the key is the student ID and 
+the value is another dictionary containing the student's name and a list of their grades.
+'''
+
+'''
+The style we used for dictionary is:
+
+students = {
+    "student_id1": {
+        "name": "Student Name 1",
+        "grades": ["85.0", "90.0", "78.0"]          # List of grades as strings
+    }
+}
+'''
 
 def load_students(FILE_NAME):
 
@@ -19,6 +37,7 @@ def load_students(FILE_NAME):
                     "name" : student_name.strip(),
                     "grades" : student_grades.split()}
 
+        #print(students)
 
     except FileNotFoundError:
         print(f"File not Found")

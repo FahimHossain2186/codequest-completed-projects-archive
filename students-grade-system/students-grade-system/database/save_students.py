@@ -1,4 +1,4 @@
-import os,sys
+import os
 
 def save_exit(students, FILE_NAME):                             #Option 8
 
@@ -18,7 +18,6 @@ def save_exit(students, FILE_NAME):                             #Option 8
                 #91007# Ahmad Said# 50.0 78.5 73.2
                 file.write(f"{student_id}# {name}# {grades_string}\n")
 
-        sys.exit()
 
     except Exception as e:
         print(f"Error saving file: {e}")

@@ -1,3 +1,7 @@
+"""
+It prints the header of the students' information.
+"""
+
 def header(students, format):
 
     if not students:
