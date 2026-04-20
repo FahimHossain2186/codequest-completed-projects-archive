@@ -9,7 +9,7 @@ from core_functions.add_student import add_student
 from core_functions.delete_student import delete_student
 
 from database.load_students import load_students
-from database.save_students import save_exit
+from database.save_students import save_students
 
 from ui.menu import menu
 
@@ -53,7 +53,7 @@ def main():
                 case 7:
                     delete_student(students)
                 case 8:
-                    save_exit(students, FILE_NAME)
+                    save_students(students, FILE_NAME)
                     sys.exit()
 
         except ValueError:
