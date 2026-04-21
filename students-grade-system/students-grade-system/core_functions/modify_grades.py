@@ -20,6 +20,11 @@ def modify_grades(students):                                                    
         
         student_info = students[student_id]
 
+        if not student_info["grades"]:
+            print("Error: This student has no grades to modify.")
+            enter()
+            return
+
         # Input validation for quiz number
         while True:                                                     
 

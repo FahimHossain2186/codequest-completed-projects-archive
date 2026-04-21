@@ -28,11 +28,13 @@ def add_grade(students):                                                        
             "student_id2": "90.0"
         }
     '''
+
     collected = {}  
 
-    for student_id, _ in students.items(): 
+    #for student_id, _ in students.items(): 
+    # _ represents the student information, which is not used in this function.
 
-        # _ represents the student information, which is not used in this function.
+    for student_id in students.keys():
 
         while True:
             try:
@@ -51,6 +53,8 @@ def add_grade(students):                                                        
 
     # Appending the collected values to dictionary
     for student_id, grade_str in collected.items():
+        while len(students[student_id]["grades"]) < test_number:
+            students[student_id]["grades"].append(" ")
         students[student_id]["grades"].append(grade_str)
 
     enter()

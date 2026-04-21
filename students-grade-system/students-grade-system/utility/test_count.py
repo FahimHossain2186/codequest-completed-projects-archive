@@ -6,5 +6,4 @@ The function takes in the students' information and returns the number of grades
 def test_count(students):
     if not students:
         return 0
-    sample_student = list(students.values())[0]
-    return len(sample_student["grades"])
+    return max(len(student_info["grades"]) for student_info in students.values())
